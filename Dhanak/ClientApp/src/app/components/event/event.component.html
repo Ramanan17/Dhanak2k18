@@ -1,3 +1,71 @@
-<p>
-  event works!
-</p>
+<h2>Events</h2>
+<div class="container">
+  <div class="col-sm-6"  *ngFor="let event of events"> 
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{event.eventName}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Description</h6>
+    <p class="card-text">{{event.description}}</p>
+    <button id="myBtn "  (click)="onBtnClick()">Register</button>
+    
+</div>
+</div>
+<div id="myModal" class="modal" [ngStyle]="{'display':display}" *ngIf="auth.isAuthenticated() && hasPhoneNumber">
+
+    <!-- Modal content -->
+    <div class="modal-content" >
+      <span class="close" (click)="onSpanClick()">&times;</span>
+     <p>Are you sure you want to register for {{event.eventName}}</p>
+     <button class="btn btn-primary" (click)="Success(event.id)">Yes</button>
+     </div>
+  
+  
+  </div>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal" [ngStyle]="{'display':display}" *ngIf="!auth.isAuthenticated()">
+
+  <!-- Modal content -->
+  <div class="modal-content" >
+    <span class="close" (click)="onSpanClick()">&times;</span>
+    <p>Please Login</p>
+    <br>
+    <button class="btn btn-primary col-sm-6 col-lg-3">Login </button>
+   </div>
+
+
+</div>
+<div id="myModal" class="modal" [ngStyle]="{'display':display}" *ngIf="!hasPhoneNumber && auth.isAuthenticated()">
+
+  <!-- Modal content -->
+  <div class="modal-content" >
+    <span class="close" (click)="onSpanClick()">&times;</span>
+   <form #f="ngForm" (submit)="onSubmit(f)">
+     <div class="form-group">
+   <label>Phone</label>
+   <input type="text" class="form-control" [(ngModel)]="phone"  pattern="[0-9]*" required
+   minlength="10"
+   maxlength="10" 
+   #mobile="ngModel" name="phone">
+   <div [hidden]="mobile.valid || mobile.pristine"
+      class="alert alert-danger">
+      <div [hidden]="!mobile.hasError('minlength')">Mobile should be 10digit</div>
+      <div [hidden]="!mobile.hasError('required')">Mobile is required</div>
+      <div [hidden]="!mobile.hasError('pattern')">Mobile numberr should be only numbers</div>
+      </div>
+   <br>
+   <br>
+   <input type="submit" class="btn btn-primary" value="Submit">
+   <p class="alert alert-sucees">SuccessFully Registered</p>
+   </div>
+   </form>
+</div>
+
+
+
+</div>
+</div>
+</div>
+
+

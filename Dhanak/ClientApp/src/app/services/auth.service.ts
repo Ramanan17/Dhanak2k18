@@ -1,3 +1,4 @@
+import { DataService } from './data.service';
 // src/app/auth/auth.service.ts
 
 import { Injectable } from '@angular/core';
@@ -21,7 +22,7 @@ export class AuthService {
     scope: 'openid profile'
   });
 
-  constructor(public router: Router) {}
+  constructor(public router: Router,public dataservice:DataService) {}
 
   public login(): void {
     this.auth0.authorize();
@@ -68,7 +69,7 @@ export class AuthService {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         self.userProfile = profile;
-        
+      
       }
       cb(err, profile);
     });

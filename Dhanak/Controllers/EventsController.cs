@@ -27,7 +27,7 @@ namespace Dhanak.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        [Authorize]
+       
         public async Task<IActionResult> Get()
         {
             var results = new List<EventResource>();

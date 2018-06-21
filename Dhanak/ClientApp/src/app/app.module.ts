@@ -6,7 +6,7 @@ import { EditEventComponent } from './components/edit-event/edit-event.component
 import { NewEventComponent } from './components/new-event/new-event.component';
 import { DataTablesModule } from 'angular-datatables';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -25,6 +25,9 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import {MatCardModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material';
 
 export const firebaseConfig ={
   apiKey: 'AIzaSyBTLixnmrPVB9x9EM3ilJb0rAmFQlLfKN0',
@@ -45,6 +48,7 @@ export const firebaseConfig ={
     EditEventComponent,
     DatatableComponent,
     EventComponent,
+   
   
    
   ],
@@ -64,6 +68,7 @@ export const firebaseConfig ={
       {path:'new',component:NewEventComponent},
       {path:'edit/:id',component:EditEventComponent},
       {path:'data',component:DatatableComponent},
+      {path:'event',component:EventComponent}
      
     ])
   ],

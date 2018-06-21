@@ -11,6 +11,18 @@ export class DataService {
   constructor(public http:Http) { 
 
   }
+  getUser(name)
+  {
+    return this.http.get("/api/user/name/"+name).pipe(map((response: any) => response.json()));
+  }
+  updateuser(user,id)
+  {
+    return this.http.put("/api/user/"+id,user).pipe(map((response: any) => response.json()));
+  }
+  addUser(user)
+  {
+    return this.http.post("/api/user",user).pipe(map((response: any) => response.json()));
+  }
 getCategory()
 {
    return this.http.get("/api/category").pipe(map((response: any) => response.json()));
