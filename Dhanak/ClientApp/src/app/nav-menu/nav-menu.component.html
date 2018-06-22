@@ -44,6 +44,11 @@
                         <span class='glyphicon glyphicon-pencil'></span>Event portal
                     </a>
                 </li>
+                <li [routerLinkActive]='["link-active"]'>
+                        <a [routerLink]='["/event"]' (click)='collapse()'>
+                            <span class='glyphicon glyphicon-th-list'></span>Events
+                        </a>
+                    </li>
             </ul>
         </div>
     </div>

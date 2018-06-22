@@ -29,9 +29,25 @@ namespace Dhanak.Controllers
 
         }
 
-        [HttpPost("{eventid}/{userid}")]
-        public async Task<IActionResult> AddRegistration(int eventid, int userid)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUsers(int id)
         {
+            var eventreg = context.Registration.Where(m => m.UserId== id);
+            var events = new List<Events>();
+            foreach (var e in eventreg)
+            {
+                var selected = await context.Events.Include(m=>m.Category).SingleOrDefaultAsync(m => m.Id == e.EventID);
+                events.Add(selected);
+
+            }
+
+            return Ok(events);
+
+        }
+        [HttpPost("{userid}/{eventid}")]
+        public async Task<IActionResult> AddRegistration(int userid, int eventid)
+        {
+            
             var registration = new EventRegistration()
             {
                 EventID = eventid,

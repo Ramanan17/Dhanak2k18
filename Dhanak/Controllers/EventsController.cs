@@ -169,7 +169,14 @@ namespace Dhanak.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var e = await context.Events.Include(m => m.Category).SingleOrDefaultAsync(m => m.Id == id);
-            context.Remove(e);
+            var registerd =  context.Registration.Where(m => m.EventID == id);
+            context.Events.Remove(e);
+            foreach (var ef in registerd)
+            {
+                context.Registration.Remove(ef);
+
+            }
+           
             await context.SaveChangesAsync();
             return Ok(id);
 

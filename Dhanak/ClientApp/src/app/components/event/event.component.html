@@ -1,22 +1,25 @@
 <h2>Events</h2>
 <div class="container">
-  <div class="col-sm-6"  *ngFor="let event of events"> 
+<div class="col-sm-6"  *ngFor="let event of validateevents;" >
+
+
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">{{event.eventName}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">Description</h6>
     <p class="card-text">{{event.description}}</p>
-    <button id="myBtn "  (click)="onBtnClick()">Register</button>
+    <button id="myBtn "class="btn btn-primary" [disabled]="event.isRegistered" (click)="onBtnClick(event.id)">Register</button>
     
 </div>
 </div>
+ 
 <div id="myModal" class="modal" [ngStyle]="{'display':display}" *ngIf="auth.isAuthenticated() && hasPhoneNumber">
 
     <!-- Modal content -->
     <div class="modal-content" >
       <span class="close" (click)="onSpanClick()">&times;</span>
-     <p>Are you sure you want to register for {{event.eventName}}</p>
-     <button class="btn btn-primary" (click)="Success(event.id)">Yes</button>
+     <p>Are you sure you want to register for {{name}}</p>
+     <button class="btn btn-primary" (click)="Success(Id)">Yes</button>
      </div>
   
   
@@ -31,7 +34,7 @@
     <span class="close" (click)="onSpanClick()">&times;</span>
     <p>Please Login</p>
     <br>
-    <button class="btn btn-primary col-sm-6 col-lg-3">Login </button>
+    <button class="btn btn-primary col-sm-6 col-lg-3" (click)="auth.login()">Login </button>
    </div>
 
 

@@ -32,7 +32,7 @@ export class NavMenuComponent {
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
        
-        console.log(this.profile.name)
+       // console.log(this.profile.name)
         this.user.name=this.profile.name
         this.dataservice.addUser(this.user).subscribe();
       });

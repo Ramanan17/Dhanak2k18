@@ -61,7 +61,7 @@ namespace Dhanak.Controllers
         {
             if (context.Users.Any(m => m.Name == userResource.Name))
             {
-                return Ok("User exists");
+                return Ok(userResource);
             }
             var user =new User()
             {
