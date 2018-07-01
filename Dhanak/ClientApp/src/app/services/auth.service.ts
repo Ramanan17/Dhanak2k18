@@ -5,6 +5,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
+import {JwtHelper} from 'angular2-jwt'
+import { Observable } from 'rxjs/internal/Observable';
+import { Observer } from 'rxjs/internal/types';
+import { user } from '../nav-menu/user';
 
 (window as any).global = window;
 
@@ -22,8 +26,16 @@ export class AuthService {
     scope: 'openid profile'
   });
 
-  constructor(public router: Router,public dataservice:DataService) {}
+  constructor(public router: Router,public dataservice:DataService) {
 
+
+  }
+  // ...
+  user:user={name:'',phone:''};
+private observer: Observer<string[]>;
+userImageChange$: Observable<string[]> = new Observable(obs => this.observer = obs);
+
+  public roles:string[]=["",""];
   public login(): void {
     this.auth0.authorize();
   }
@@ -35,12 +47,20 @@ export class AuthService {
         window.location.hash = '';
         this.setSession(authResult);
         this.router.navigate(['/']);
-        window.location.reload();
+           //window.location.reload();
+           this.getProfile((err, profile) => {
+            this.user.name=profile.name
+            this.dataservice.addUser(profile.name).subscribe();
+            
+          });
+        
       } else if (err) {
         this.router.navigate(['/']);
         console.log(err);
       }
+    
     });
+   
   }
 
   private setSession(authResult): void {
@@ -56,11 +76,22 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    this.roles=[];
     // Go back to the home route
     this.router.navigate(['/']);
   }
+  public isInRole(roleName)
+  {
+   
+    if(this.roles!=null)
+      return this.roles.indexOf(roleName)>-1
+      else{
+        return false
+      }
+  }
   public getProfile(cb): void {
     const accessToken = localStorage.getItem('access_token');
+    const idToken = localStorage.getItem('id_token')
     if (!accessToken) {
       throw new Error('Access Token must exist to fetch profile');
     }
@@ -70,6 +101,12 @@ export class AuthService {
       if (profile) {
         self.userProfile = profile;
       
+       // console.log(profile.app_metadata.roles);
+        var jwtHelper=new JwtHelper();
+        var decodedToken=jwtHelper.decodeToken(idToken);
+        this.roles=decodedToken['https://dhanak.com/roles'];
+      //  this.observer.next(this.roles)
+       
       }
       cb(err, profile);
     });
@@ -79,9 +116,8 @@ export class AuthService {
     // Check whether the current time is past the
     // Access Token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
-    return new Date().getTime() < expiresAt;
+    return new  Date().getTime() < expiresAt;
   }
   
-
 
 }

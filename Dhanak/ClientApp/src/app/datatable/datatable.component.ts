@@ -1,3 +1,4 @@
+import { auth } from 'firebase/app';
 import { event } from './../components/new-event/event';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from './../services/data.service';
@@ -10,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./datatable.component.css']
 })
 export class DatatableComponent implements OnInit {
-
+  interval:any;
   // tslint:disable-next-line:whitespace
   events:any[];
    // tslint:disable-next-line:whitespace
@@ -22,15 +23,25 @@ export class DatatableComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.refreshData();
+    this.interval = setInterval(() => { 
+        this.refreshData(); 
+    }, 1000);
      // tslint:disable-next-line:whitespace
       
   }
-  onDelete(id)
+  refreshData()
   {
-    var e = this.events.find(x => x.id==id);
-    this.events.splice(e,1);
-    console.log('CLICKED');
-
+    this.dataService.getEvents().subscribe(e => {this.events = e});
+  
+  }
+  onDelete(id,name)
+  {
+    var e = this.events.find(x => x.eventName==name);
+    var index = this.events.indexOf(e);
+    this.events.splice(index,1);
+   
+    
     return this.dataService.deleteEvent(id).subscribe();
   
   }

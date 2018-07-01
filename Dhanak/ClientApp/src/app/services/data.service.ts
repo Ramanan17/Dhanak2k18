@@ -1,6 +1,7 @@
+import { Observable } from 'rxjs/internal/Observable';
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+
 import { map } from 'rxjs/operators';
 import { Response } from '@angular/http';
 @Injectable(
@@ -10,6 +11,19 @@ export class DataService {
 
   constructor(public http:Http) { 
 
+  }
+  getallUsers()
+  {
+    return this.http.get("/api/user").pipe(map((response: any) => response.json()));
+  }
+  getRegisteredUsers(id)
+  {
+    return this.http.get("/api/registration/get/"+id).pipe(map((response: any) => response.json()));
+  }
+  
+  deleteRegisteredEvent(userid,eventid)
+  {
+    return this.http.delete("/api/registration/"+userid+"/"+eventid,null).pipe(map((response: any) => response.json()));
   }
   getRegisteredevents(id)
   {
@@ -59,5 +73,13 @@ getCategories(id)
 deleteEvent(id)
 {
   return this.http.delete('/api/events/'+id).pipe(map((response: any) => response.json()));
+}
+DeleteEvent(id):Observable<any>
+{
+  return this.http.delete('/api/events/'+id).pipe(map((response: any) => response.json()));
+}
+GetEvents():Observable<any[]>
+{
+  return this.http.get("/api/events").pipe(map((response: any) => response.json()));
 }
 }

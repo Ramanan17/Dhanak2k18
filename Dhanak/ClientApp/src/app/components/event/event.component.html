@@ -1,9 +1,17 @@
 <h2>Events</h2>
-<div class="container">
-<div class="col-sm-6"  *ngFor="let event of validateevents;" >
+<div class="container" *ngIf="auth.userProfile || !auth.isAuthenticated()">
+ 
+    <div *ngFor="let cat of category">
+        <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel id="{{cat.id}}" title="{{cat.name}}">
+                <ng-template ngbPanelContent>
+<div   *ngFor="let event of validateevents;" >
 
-
-<div class="card" style="width: 18rem;">
+   
+       
+<div class="card" style="width: 18rem;" *ngIf="cat.id==event.category.id">
+   
+         
   <div class="card-body">
     <h5 class="card-title">{{event.eventName}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">Description</h6>
@@ -11,8 +19,10 @@
     <button id="myBtn "class="btn btn-primary" [disabled]="event.isRegistered" (click)="onBtnClick(event.id)">Register</button>
     
 </div>
+
+
 </div>
- 
+
 <div id="myModal" class="modal" [ngStyle]="{'display':display}" *ngIf="auth.isAuthenticated() && hasPhoneNumber">
 
     <!-- Modal content -->
@@ -69,6 +79,13 @@
 
 </div>
 </div>
+</ng-template>
+</ngb-panel>
+</ngb-accordion>
+</div>
 </div>
 
 
+<div *ngIf="!auth.userProfile && auth.isAuthenticated()">
+  <p>Please wait while we fetch your details...</p>
+</div>

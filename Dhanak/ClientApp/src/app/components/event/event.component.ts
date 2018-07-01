@@ -1,5 +1,5 @@
 import { eventnew } from './eventnew';
-import { events } from './../events';
+import { events, category } from './../events';
 import { element } from 'protractor';
 import { user } from './../../nav-menu/user';
 import { AuthService } from './../../services/auth.service';
@@ -9,6 +9,7 @@ import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 import { async } from '@angular/core/testing';
 import { forEach } from '@angular/router/src/utils/collection';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -36,7 +37,7 @@ userResource={
 
 };
 name='';
-
+canShow=false;
 selectedevents:any;
 isRegistered
 disabled=false;
@@ -44,11 +45,15 @@ disabled=false;
 validateevents:eventnew[];
 
 finalevent:eventnew[];
-
-
+category:any[];
+public isCollapsed = false;
+public canshow=false;
+allusers:any[];
   constructor(public dataService:DataService,public route:Router,public auth:AuthService) {
+    this.dataService.getCategory().subscribe(e => {this.category=e})
     this.dataService.getEvents().subscribe(e => {this.validateevents=e})
-   
+    this.dataService.getallUsers().subscribe(res => {this.allusers = res})
+  
     if(auth.isAuthenticated())
     {
       if (this.auth.userProfile) {
@@ -57,8 +62,7 @@ finalevent:eventnew[];
       } else {
         this.auth.getProfile((err, profile) => {
           this.profile = profile;
-         
-         // console.log(this.profile.name)
+        // console.log(this.profile.name)
          // this.user.name=this.profile.name
          this.dataService.getUser(this.profile.name).
          subscribe(e =>{ this.user=e; this.dataService.getRegisteredevents(this.user.id).subscribe(m =>{this.selectedevents=m;
@@ -81,7 +85,7 @@ finalevent:eventnew[];
         
         
        
-        ;});
+        ;this.canshow=true});
          
 
         });
@@ -149,7 +153,17 @@ finalevent:eventnew[];
       this.display='none';
 
    }
+   refreshData()
+    {
+     /// this.dataService.getEvents().subscribe(e => {this.events = e});
+     //this.dataService.getCategory().subscribe(e => {this.category=e})
+    // this.dataService.getEvents().subscribe(e => {this.validateevents=e})
+     
+    
+    }
 
   ngOnInit() {
+    
+   
   }
 }

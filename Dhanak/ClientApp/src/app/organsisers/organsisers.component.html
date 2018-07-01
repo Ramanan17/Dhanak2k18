@@ -1,0 +1,44 @@
+<h1>Welcome to Organiser Portal </h1>
+<br/>
+<br>
+<br>
+<h3>Please Choose your event</h3>
+
+<form  >
+  <mat-form-field>
+  <input type="text" placeholder="Pick Category" aria-label="Event"  matInput [formControl]="myControl" [matAutocomplete]="auto">
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" (optionSelected)="SelectedCategory($event)" >
+  <mat-option *ngFor="let category of categories" [value]="category.name"  >{{category.name}}</mat-option>
+</mat-autocomplete>
+<br/>
+<br/>
+<mat-form-field>
+    <input type="text" placeholder="Pick Event" aria-label="Event"  matInput [formControl]="myControl" [matAutocomplete]="auto2">
+  </mat-form-field>
+  <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="SelectedEvent($event)" >
+      <mat-option *ngFor="let event of selectedEvents" [value]="event.eventName"  >{{event.eventName}}</mat-option>
+    </mat-autocomplete>
+
+<br>
+
+</form>
+
+<div *ngIf="isSelected">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+        <th>Name</th>
+        <th>Phone</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{user.name}}</td>
+          <td>{{user.phone}}</td>
+        </tr>
+      </tbody>
+
+      </table>
+
+</div>
+

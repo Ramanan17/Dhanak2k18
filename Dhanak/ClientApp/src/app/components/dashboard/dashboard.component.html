@@ -1,0 +1,25 @@
+<div class="panel panel-default profile-area">
+        <div class="panel-heading">
+          <h3>Profile</h3>
+        </div>
+        <div class="panel-body">
+          <img src="{{profile?.picture}}" class="avatar" alt="avatar">
+          <div>
+           
+            <h3 class="nickname">Hello {{ profile?.name }}</h3>
+          </div>
+         <div>
+             <h3>Your events</h3>
+             <div *ngFor="let event of RegisteredEvents">
+                <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{event?.eventName}}</h5>
+                    <p class="card-text">{{event?.Description}}</p>
+                    <button class="btn btn-primary" (click)="delete(event.id)" >Leave</button>
+                  
+                  </div>
+                  </div>
+             </div>
+         </div>
+        </div>
+      </div>

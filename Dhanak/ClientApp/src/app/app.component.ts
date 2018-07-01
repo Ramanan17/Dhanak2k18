@@ -9,7 +9,12 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   constructor()
   {
+   
   //  auth.handleAuthentication();
+  }
+  ngOninit()
+  {
+ 
   }
   title = 'app';
 }

@@ -18,7 +18,7 @@
                             <span class='glyphicon glyphicon-user'></span> Login
                         </a>
                         <a (click)='auth.logout()' *ngIf="auth.isAuthenticated()">
-                            <span class='glyphicon glyphicon-user'></span> Logout
+                            <span class='glyphicon glyphicon-user'></span> Logout 
                         </a>
                                  
 
@@ -38,17 +38,30 @@
                         <span class='glyphicon glyphicon-th-list'></span> Fetch data
                     </a>
                 </li>
+                <li [routerLinkActive]='["link-active"]'>
+                        <a [routerLink]='["/event"]' (click)='click()'>
+                            <span class='glyphicon glyphicon-th-list'></span>Events
+                        </a>
+                    </li>
                
                 <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/data"]' (click)='collapse()'>
+                    <a [routerLink]='["/data"]' (click)='collapse()' *ngIf="auth.isInRole('Admin')">
                         <span class='glyphicon glyphicon-pencil'></span>Event portal
                     </a>
                 </li>
                 <li [routerLinkActive]='["link-active"]'>
-                        <a [routerLink]='["/event"]' (click)='collapse()'>
-                            <span class='glyphicon glyphicon-th-list'></span>Events
+                        <a [routerLink]='["/dash"]' (click)='collapse()' *ngIf="auth.isAuthenticated()">
+                            <span class='glyphicon glyphicon-pencil'></span>DashBoard
                         </a>
                     </li>
+                    <li [routerLinkActive]='["link-active"]'>
+                            <a [routerLink]='["/org"]' (click)='collapse()' *ngIf="auth.isInRole('Organiser')">
+                                <span class='glyphicon glyphicon-pencil'></span>Organiser Portal
+                            </a>
+                        </li>
+
+                
+               
             </ul>
         </div>
     </div>
