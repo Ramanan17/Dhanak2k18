@@ -91,6 +91,7 @@ namespace Dhanak.Controllers
 
 
             };
+            
             result.EventId = e.Id;
             result.EventName = e.EventName;
             result.CategoryId = e.Category.Id;

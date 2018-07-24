@@ -1,7 +1,7 @@
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 
-import { ClientService } from './services/client.service';
+
 
 import { EditEventComponent } from './components/edit-event/edit-event.component';
 import { NewEventComponent } from './components/new-event/new-event.component';
@@ -21,11 +21,7 @@ import { DataService } from './services/data.service';
 import { DatatableComponent } from './datatable/datatable.component';
 import { EventComponent } from './components/event/event.component';
 
-import {AngularFireModule} from 'angularfire2';
-import {AngularFireDatabase} from 'angularfire2/database';
-import {AngularFireAuth} from 'angularfire2/auth';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -108,8 +104,7 @@ export const firebaseConfig ={
     HttpClientModule,
     DataTablesModule,
     FormsModule,
-    AngularFireDatabaseModule ,
-    AngularFireAuthModule,
+   
     CdkTableModule,
     CdkTreeModule,
     MatAutocompleteModule,
@@ -147,7 +142,7 @@ export const firebaseConfig ={
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+   
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -166,7 +161,7 @@ export const firebaseConfig ={
      
     ])
   ],
-  providers: [DataService,AngularFireAuth,AngularFireDatabase,ClientService,AuthService],
+  providers: [DataService,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

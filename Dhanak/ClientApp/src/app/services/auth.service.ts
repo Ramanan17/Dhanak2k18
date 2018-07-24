@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
-import {JwtHelper} from 'angular2-jwt'
+import {JwtHelperService } from '@auth0/angular-jwt'
 import { Observable } from 'rxjs/internal/Observable';
 import { Observer } from 'rxjs/internal/types';
 import { user } from '../nav-menu/user';
@@ -21,7 +21,7 @@ export class AuthService {
     domain: 'dhanak.auth0.com',
     responseType: 'token id_token',
     audience: 'https://dhanak.auth0.com/userinfo',
-    redirectUri: 'http://localhost:50456',
+    redirectUri: 'http://dhanak-001-site1.ctempurl.com',
     
     scope: 'openid profile'
   });
@@ -102,7 +102,7 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
         self.userProfile = profile;
       
        // console.log(profile.app_metadata.roles);
-        var jwtHelper=new JwtHelper();
+        var jwtHelper=new JwtHelperService();
         var decodedToken=jwtHelper.decodeToken(idToken);
         this.roles=decodedToken['https://dhanak.com/roles'];
       //  this.observer.next(this.roles)
