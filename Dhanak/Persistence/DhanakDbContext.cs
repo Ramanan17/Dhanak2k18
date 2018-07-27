@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dhanak.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Dhanak.Persistence
 {
     public class DhanakDbContext:DbContext
@@ -16,6 +17,9 @@ namespace Dhanak.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<Events> Events { get; set; }
         public DbSet<Category> Category { get; set; }
-        public DbSet<EventRegistration> Registration { get; set; } 
+        public DbSet<EventRegistration> Registration { get; set; }
+        public DbSet<Rules> Rules { get; set; }
+
+       
     }
 }

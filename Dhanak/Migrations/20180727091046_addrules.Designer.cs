@@ -4,14 +4,16 @@ using Dhanak.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dhanak.Migrations
 {
     [DbContext(typeof(DhanakDbContext))]
-    partial class DhanakDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180727091046_addrules")]
+    partial class addrules
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

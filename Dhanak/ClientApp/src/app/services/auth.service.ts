@@ -22,7 +22,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://dhanak.auth0.com/userinfo',
     redirectUri: 'http://dhanak-001-site1.ctempurl.com',
-    
+
     scope: 'openid profile'
   });
 
@@ -39,7 +39,7 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
   public login(): void {
     this.auth0.authorize();
   }
- 
+
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
@@ -51,16 +51,16 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
            this.getProfile((err, profile) => {
             this.user.name=profile.name
             this.dataservice.addUser(profile.name).subscribe();
-            
+
           });
-        
+
       } else if (err) {
         this.router.navigate(['/']);
         console.log(err);
       }
-    
+
     });
-   
+
   }
 
   private setSession(authResult): void {
@@ -82,7 +82,7 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
   }
   public isInRole(roleName)
   {
-   
+
     if(this.roles!=null)
       return this.roles.indexOf(roleName)>-1
       else{
@@ -95,18 +95,18 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
     if (!accessToken) {
       throw new Error('Access Token must exist to fetch profile');
     }
-  
+
     const self = this;
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         self.userProfile = profile;
-      
+
        // console.log(profile.app_metadata.roles);
         var jwtHelper=new JwtHelperService();
         var decodedToken=jwtHelper.decodeToken(idToken);
         this.roles=decodedToken['https://dhanak.com/roles'];
       //  this.observer.next(this.roles)
-       
+
       }
       cb(err, profile);
     });
@@ -118,6 +118,6 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
     return new  Date().getTime() < expiresAt;
   }
-  
+
 
 }

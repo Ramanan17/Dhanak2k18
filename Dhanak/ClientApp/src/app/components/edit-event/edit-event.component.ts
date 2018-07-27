@@ -19,25 +19,36 @@ export class EditEventComponent implements OnInit,AfterViewInit {
   cid:number;
 
   cName:string;
-  events:events = { eventName:'',description:'',categoryId:{id:0,name:''},coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
- 
-  event:event = { eventName:'',description:'',categoryId:0,coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
- 
- 
-  constructor(private route: ActivatedRoute,private dataservice:DataService) {
-    this.route.params.subscribe( params => this.Id=params.id );
+  events:events = { eventName:'',rules:[{id:0,rules:''}],description:'',categoryId:{id:0,name:''},coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
+
+  event:event = { eventName:'',rules:[{id:0,rules:''}],description:'',categoryId:0,coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
+
+
+  constructor(private route: ActivatedRoute,private dataservice:DataService,public router:Router) {
+    this.route.params.subscribe( params =>{ this.Id=params.id;this.dataservice.getEvent(this.Id).subscribe(res =>{this.events.eventName=res.eventName,this.events.description=this.event.description,this.events.coOrdinator=res.coOrdinator,this.events.organiser=res.organiser});
+  } );
     this.dataservice.getEvent(this.Id).subscribe(res => {this.event=res,this.categoryid=res.categoryId});
     //this.categoryid=this.events.categoryId.toString();
-    this.dataservice.getEvent(this.Id).subscribe(res =>{this.events.eventName=res.eventName,this.events.description=this.event.description,this.events.coOrdinator=res.coOrdinator,this.events.organiser=res.organiser});
-    this.dataservice.getCategory().subscribe(res => this.category=res)
-    
-    
-   }
-   
-   
+      this.dataservice.getCategory().subscribe(res => this.category=res)
 
-     
- 
+
+   }
+   add()
+   {
+     var rule={
+
+       rules:""
+     }
+     this.event.rules.push(rule);
+   }
+   delete(id)
+   {
+     this.event.rules.splice(id,1);
+   }
+
+
+
+
 
 
    onSubmit({value,valid})
@@ -48,8 +59,8 @@ export class EditEventComponent implements OnInit,AfterViewInit {
           //this.event.categoryId=this.categoryid;
           this.event.coOrdinator=this.events.coOrdinator;
           this.event.organiser=this.events.organiser;
-           
-          console.log("pass")     
+
+          console.log("pass")
           console.log(this.event);
           this.dataservice.editEvents(this.event,this.Id).subscribe();
         }
@@ -58,6 +69,8 @@ export class EditEventComponent implements OnInit,AfterViewInit {
           console.log(value)
           console.log("fail");
         }
+        this.router.navigate(['/data']);
+
    }
 
 
@@ -66,6 +79,6 @@ export class EditEventComponent implements OnInit,AfterViewInit {
   ngAfterViewInit()
   {
         }
-        
+
 
 }

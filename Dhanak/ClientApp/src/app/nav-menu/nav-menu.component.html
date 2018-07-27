@@ -18,14 +18,14 @@
                             <span class='glyphicon glyphicon-user'></span> Login
                         </a>
                         <a (click)='auth.logout()' *ngIf="auth.isAuthenticated()">
-                            <span class='glyphicon glyphicon-user'></span> Logout 
+                            <span class='glyphicon glyphicon-user'></span> Logout
                         </a>
-                                 
+
 
                 </li>
                 <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
                     <a [routerLink]='["/"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-home'></span> Home 
+                        <span class='glyphicon glyphicon-home'></span> Home
                     </a>
                 </li>
                 <li [routerLinkActive]='["link-active"]'>
@@ -35,7 +35,7 @@
                 </li>
                 <li [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
+                        <span class='glyphicon glyphicon-th-list'></span> Fetch
                     </a>
                 </li>
                 <li [routerLinkActive]='["link-active"]'>
@@ -43,7 +43,7 @@
                             <span class='glyphicon glyphicon-th-list'></span>Events
                         </a>
                     </li>
-               
+
                 <li [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/data"]' (click)='collapse()' *ngIf="auth.isInRole('Admin')">
                         <span class='glyphicon glyphicon-pencil'></span>Event portal
@@ -60,8 +60,8 @@
                             </a>
                         </li>
 
-                
-               
+
+
             </ul>
         </div>
     </div>

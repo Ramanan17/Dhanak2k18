@@ -25,5 +25,12 @@ namespace Dhanak.Models
         public string  CoOrdinatorName { get; set; }
         public string CoOrdinatorPhone { get; set; }
         public string Description { get; set; }
+        public List<Rules> Rules { get; set; }
+    }
+
+    public class Rules
+    {
+        public int Id { get; set; }
+        public string rules { get; set; }
     }
 }

@@ -77,17 +77,25 @@ namespace Dhanak.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-          var e= await context.Events.Include(m=>m.Category).SingleOrDefaultAsync(m =>m.Id==id);
+          var e= await context.Events.Include(m=>m.Category).Include(m => m.Rules).SingleOrDefaultAsync(m =>m.Id==id);
             if (e == null)
             {
                 return NotFound();
             }
+            var rule1 = new Rules()
+            {
+                rules = ""
+            };
             var result = new EventResource()
             {
                 CategoryId = 0,
                 Organiser = new OrganiserResource() { Email = "email" },
-                CoOrdinator = new CoOrdinatorResource() { Name = "name" }
+                CoOrdinator = new CoOrdinatorResource() { Name = "name" },
+                rules = new List<Rules>()
+                {rule1
 
+                }
+                
 
 
             };
@@ -101,7 +109,7 @@ namespace Dhanak.Controllers
             result.CoOrdinator.Name = e.CoOrdinatorName;
             result.CoOrdinator.Phone = e.OrganizerPhone;
             result.Description = e.Description;
-
+            result.rules = e.Rules;
             return Ok(result);
         }
 
@@ -125,7 +133,9 @@ namespace Dhanak.Controllers
                 OrganizerPhone = resource.Organiser.Phone,
                 CoOrdinatorName = resource.CoOrdinator.Name,
                 CoOrdinatorPhone = resource.CoOrdinator.Phone,
-                Description = resource.Description
+                Description = resource.Description,
+                Rules = resource.rules
+                
 
 
 
@@ -146,7 +156,7 @@ namespace Dhanak.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var e = await context.Events.Include(m => m.Category).SingleOrDefaultAsync(m => m.Id == id);
+            var e = await context.Events.Include(m => m.Category).Include(m => m.Rules).SingleOrDefaultAsync(m => m.Id == id);
             var c = await context.Category.SingleOrDefaultAsync(m => m.Id == resource.CategoryId);
             e.EventName = resource.EventName;
             e.Category = c;
@@ -156,6 +166,7 @@ namespace Dhanak.Controllers
             e.CoOrdinatorName = resource.CoOrdinator.Name;
             e.CoOrdinatorPhone = resource.CoOrdinator.Phone;
             e.Description = resource.Description;
+            e.Rules = resource.rules;
 
             await context.SaveChangesAsync();
 

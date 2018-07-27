@@ -4,6 +4,7 @@ export interface events{
     organiser:organiser,
     coOrdinator:coOrdinator,
     description:string,
+    rules:any[]
 }
 export interface category{
     id:number;
@@ -16,7 +17,7 @@ export interface organiser{
 }
 export interface coOrdinator{
     name:string,
-  
+
     phone:string
 }
 
