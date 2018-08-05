@@ -19,6 +19,9 @@ export class EditEventComponent implements OnInit,AfterViewInit {
   cid:number;
 
   cName:string;
+  rule:Object={
+    rules:''
+  }
   events:events = { eventName:'',rules:[{id:0,rules:''}],description:'',categoryId:{id:0,name:''},coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
 
   event:event = { eventName:'',rules:[{id:0,rules:''}],description:'',categoryId:0,coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
@@ -29,21 +32,20 @@ export class EditEventComponent implements OnInit,AfterViewInit {
   } );
     this.dataservice.getEvent(this.Id).subscribe(res => {this.event=res,this.categoryid=res.categoryId});
     //this.categoryid=this.events.categoryId.toString();
-      this.dataservice.getCategory().subscribe(res => this.category=res)
+    this.dataservice.getCategory().subscribe(res => this.category = res);
 
 
-   }
+  }
    add()
    {
-     var rule={
 
-       rules:""
-     }
-     this.event.rules.push(rule);
+
+     this.event.rules.push(this.rule={rules:''});
    }
    delete(id)
    {
-     this.event.rules.splice(id,1);
+     this.event.rules.splice(id, 1);
+     this.dataservice.deleteEvent(id).subscribe();
    }
 
 
@@ -58,10 +60,12 @@ export class EditEventComponent implements OnInit,AfterViewInit {
           this.event.eventName=this.events.eventName;
           //this.event.categoryId=this.categoryid;
           this.event.coOrdinator=this.events.coOrdinator;
-          this.event.organiser=this.events.organiser;
+          this.event.organiser = this.events.organiser;
+          this.event.description=this.events.description;
 
-          console.log("pass")
-          console.log(this.event);
+
+        //  console.log("pass")
+          //console.log(this.event);
           this.dataservice.editEvents(this.event,this.Id).subscribe();
         }
         else{

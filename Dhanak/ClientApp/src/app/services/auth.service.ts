@@ -21,7 +21,7 @@ export class AuthService {
     domain: 'dhanak.auth0.com',
     responseType: 'token id_token',
     audience: 'https://dhanak.auth0.com/userinfo',
-    redirectUri: 'http://dhanak-001-site1.ctempurl.com',
+    redirectUri: 'http://localhost:50456',
 
     scope: 'openid profile'
   });
@@ -32,6 +32,8 @@ export class AuthService {
   }
   // ...
   user:user={name:'',phone:''};
+  eventid:any[];
+
 private observer: Observer<string[]>;
 userImageChange$: Observable<string[]> = new Observable(obs => this.observer = obs);
 
@@ -49,7 +51,8 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
         this.router.navigate(['/']);
            //window.location.reload();
            this.getProfile((err, profile) => {
-            this.user.name=profile.name
+             this.user.name = profile.name;
+
             this.dataservice.addUser(profile.name).subscribe();
 
           });
@@ -76,18 +79,18 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    this.roles=[];
+    this.roles = [];
+
     // Go back to the home route
     this.router.navigate(['/']);
   }
-  public isInRole(roleName)
-  {
+  public isInRole(roleName) {
 
-    if(this.roles!=null)
-      return this.roles.indexOf(roleName)>-1
-      else{
-        return false
-      }
+    if (this.roles != null)
+      return this.roles.indexOf(roleName) > -1;
+    else {
+      return false;
+    }
   }
   public getProfile(cb): void {
     const accessToken = localStorage.getItem('access_token');
@@ -104,8 +107,10 @@ userImageChange$: Observable<string[]> = new Observable(obs => this.observer = o
        // console.log(profile.app_metadata.roles);
         var jwtHelper=new JwtHelperService();
         var decodedToken=jwtHelper.decodeToken(idToken);
-        this.roles=decodedToken['https://dhanak.com/roles'];
-      //  this.observer.next(this.roles)
+        this.roles = decodedToken['https://dhanak.com/roles'];
+        this.eventid = decodedToken['https://dhanak.com/eventid'];
+
+        //  this.observer.next(this.roles)
 
       }
       cb(err, profile);

@@ -156,8 +156,12 @@ namespace Dhanak.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+          
             var e = await context.Events.Include(m => m.Category).Include(m => m.Rules).SingleOrDefaultAsync(m => m.Id == id);
             var c = await context.Category.SingleOrDefaultAsync(m => m.Id == resource.CategoryId);
+            var added = new List<Rules>();
+            var remove = new List<Rules>();
             e.EventName = resource.EventName;
             e.Category = c;
             e.OrganizerName = resource.Organiser.Name;
@@ -166,8 +170,37 @@ namespace Dhanak.Controllers
             e.CoOrdinatorName = resource.CoOrdinator.Name;
             e.CoOrdinatorPhone = resource.CoOrdinator.Phone;
             e.Description = resource.Description;
-            e.Rules = resource.rules;
 
+            foreach (var rule in resource.rules)
+            {
+                if (e.Rules.Any(u => u.Id == rule.Id))
+                {
+                    var rul = e.Rules.SingleOrDefault(u => u.Id == rule.Id);
+                    if (rul != null)
+                    {
+                        rul.rules = rule.rules;
+                    }
+                }
+                else
+                {
+                      
+                    e.Rules.Add(rule);
+                }
+
+                
+               
+            }
+
+          
+           
+
+           
+            
+
+          
+
+            
+           
             await context.SaveChangesAsync();
 
             return Ok(e);
@@ -175,6 +208,18 @@ namespace Dhanak.Controllers
 
         }
 
+        [HttpDelete("Rules/{id}")]
+        public async Task<IActionResult> DeleteRule(int id)
+        {
+            var rule = await context.Rules.SingleOrDefaultAsync(m => m.Id == id);
+            if (rule != null)
+            {
+                context.Remove(rule);
+            }
+
+           await context.SaveChangesAsync();
+            return Ok(rule);
+        }
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
 

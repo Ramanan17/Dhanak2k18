@@ -2,11 +2,13 @@ import { Observable } from 'rxjs';
 import { DataService } from './../services/data.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { auth } from 'firebase/app';
 import { user } from './user';
 import { eventnew } from '../components/event/eventnew';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { ToolbarService } from '../services/toolbar.service';
 
 
 
@@ -38,7 +40,7 @@ validateevents:eventnew[];
 finalevent:eventnew[];
 category:any[];
 id:''
-  
+
   collapse() {
     this.isExpanded = false;
   }
@@ -46,9 +48,27 @@ id:''
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
-  
-  constructor(private route:Router,public auth:AuthService,public dataservice:DataService)
+    // @ViewChild('btn') main;
+    mobileQuery: MediaQueryList;
+    click2;
+    // displ;
+    zIndex;
+    // private toolbarService: ToolbarService;
+    private _mobileQueryListener: () => void;
+
+  constructor(private route:Router,public auth:AuthService,public dataservice:DataService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private toolbarService: ToolbarService)
   {
+    this.mobileQuery = media.matchMedia('(max-width: 950px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+    // this.displ=false;
+    // this.zIndex = this.toolbarService.get();
+    this.zIndex = 2;
+    this.toolbarService.toggleToolbarzIndex.subscribe(data => {
+      // console.log('something was changed in category-list-edit');
+      this.zIndex = data;
+  });
+
    // console.log(auth.isAuthenticated());
    auth.handleAuthentication();
 
@@ -57,12 +77,12 @@ id:''
   ngOnInit() {
     if (this.auth.userProfile) {
       this.profile = this.auth.userProfile;
-       
+
     } else {
-     
+
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
-       
+
         console.log(this.profile.name)
         this.users.name=this.profile.name
         this.dataservice.addUser(this.users).subscribe();
@@ -71,25 +91,25 @@ id:''
 
     }
     this.refreshData();
-    this.interval = setInterval(() => { 
-        this.refreshData(); 
+    this.interval = setInterval(() => {
+        this.refreshData();
         this.auth.getProfile
     }, 500);
-   
+
   }
   ngAfterViewInit()
   {
-   
+
   }
   refresh2Data()
   {
-    
-    
+
+
   }
   refreshData()
   {
     this.auth.handleAuthentication();
-      
+
 
   }
   click()
@@ -101,11 +121,11 @@ id:''
     {
       if (this.auth.userProfile) {
         this.profile = this.auth.userProfile;
-      
+
       } else {
         this.auth.getProfile((err, profile) => {
           this.profile = profile;
-         
+
          // console.log(this.profile.name)
          // this.user.name=this.profile.name
          dataService.getUser(this.profile.name).
@@ -126,28 +146,39 @@ id:''
              }
            }
          }
-        
-        
-       
+
+
+
         ;this.canShow=true});
-         
+
 
         });
-         
-       
+
+
        })
-       
+
          // this.dataService.addUser(this.user).subscribe();
         });
       }
-     
+
     }
     this.route.navigate(["/event"]);
-    
+
   }
+  onActivate(componentRef){
+    this.click2 = componentRef.openSideNav();
+    // console.log(componentRef);
+  }
+
+  edit(){
+    //edits made here
+    this.toolbarService.toggleToolbarzIndex.emit(-2);
+    // console.log(this.zIndex);
+}
+
   ngOnDestroy()
   {
-     
+
   }
-  
+
 }

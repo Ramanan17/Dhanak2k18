@@ -18,19 +18,20 @@ interval:any;
   constructor(public auth:AuthService,public dataservice:DataService) {
 if (this.auth.userProfile) {
       this.profile = this.auth.userProfile;
-      
-      
+
+
     } else {
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
-        this.dataservice.getUser(this.profile.name).
+        console.log(this.profile)
+        this.dataservice.getUser(this.profile.user_metadata).
         subscribe(e => {this.user=e;this.dataservice.getRegisteredevents(this.user.id).
           subscribe(r => {this.RegisteredEvents=r;console.log(this.RegisteredEvents)})})
       });
     }
 
 
-   
+
    }
    delete(id)
    {
@@ -50,13 +51,13 @@ if (this.auth.userProfile) {
    }
 
   ngOnInit() {
-    
 
-    this.interval = setInterval(() => { 
-      this.refreshData(); 
+
+    this.interval = setInterval(() => {
+      this.refreshData();
       this.auth.getProfile
   }, 1000);
- 
+
 
   }
   refreshData()
@@ -64,7 +65,7 @@ if (this.auth.userProfile) {
     this.dataservice.getUser(this.profile.name).
     subscribe(e => {this.user=e;this.dataservice.getRegisteredevents(this.user.id).
       subscribe(r => {this.RegisteredEvents=r;})})
- 
+
   }
 
 }

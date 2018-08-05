@@ -16,6 +16,7 @@ export class NewEventComponent implements OnInit {
   validity:boolean=true;
   rules :any[];
   rule:any;
+
   events:events = { eventName:'',rules:[{rules:''}],description:'',categoryId:{id:0,name:''},coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
 
 
@@ -24,6 +25,7 @@ export class NewEventComponent implements OnInit {
   {
     this.dataservice.getCategory().subscribe(c => this.category=c)
     this.events.rules.push(this.rule={rules:""})
+
   }
 
     ngOnInit() {
@@ -31,11 +33,10 @@ export class NewEventComponent implements OnInit {
   }
   add()
   {
-    var rule={
 
-      rules:""
-    }
-    this.events.rules.push(rule);
+
+    this.events.rules.push(this.rule={rules:''});
+
   }
   delete(id)
   {
@@ -55,5 +56,6 @@ console.log(this.events)
        this.validity=false;
     }
   }
+
 
 }

@@ -5,12 +5,15 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Response } from '@angular/http';
 @Injectable(
- 
+
 )
 export class DataService {
 
-  constructor(public http:Http) { 
+  constructor(public http:Http) {
 
+  }
+  deleterule(id) {
+    return this.http.delete("/api/events/Rule/" + id).pipe(map((response: any) => response.json()));
   }
   getallUsers()
   {
@@ -20,7 +23,7 @@ export class DataService {
   {
     return this.http.get("/api/registration/get/"+id).pipe(map((response: any) => response.json()));
   }
-  
+
   deleteRegisteredEvent(userid,eventid)
   {
     return this.http.delete("/api/registration/"+userid+"/"+eventid,null).pipe(map((response: any) => response.json()));
@@ -32,6 +35,10 @@ export class DataService {
   registerUser(userid,eventid)
   {
     return this.http.post("/api/registration/"+userid+"/"+eventid,null).pipe(map((response: any) => response.json()));
+  }
+  checkRegisterd(userid,eventid)
+  {
+    return this.http.get("/api/registration/"+userid+"/"+eventid,null).pipe(map((response: any) => response.json()));
   }
   getUser(name)
   {

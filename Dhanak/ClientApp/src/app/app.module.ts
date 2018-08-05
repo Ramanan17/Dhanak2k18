@@ -1,3 +1,4 @@
+import { EventDetailsComponent } from './components/event-details/event-details.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 
@@ -59,7 +60,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
- 
+
 } from '@angular/material';
 import { Response } from '@angular/http';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -69,6 +70,10 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import 'hammerjs';
 import { RoleGuardService } from './services/role-guard.service';
+import { ToolbarService } from './services/toolbar.service';
+import { ScriptService } from './services/script.service';
+import { MainComponent } from './components/main/main.component';
+import { EventsComponent } from './components/events/events.component';
 
 export const firebaseConfig ={
   apiKey: 'AIzaSyBTLixnmrPVB9x9EM3ilJb0rAmFQlLfKN0',
@@ -91,9 +96,12 @@ export const firebaseConfig ={
     EventComponent,
     DashboardComponent,
     OrgansisersComponent,
-   
-  
-   
+    MainComponent,
+    EventDetailsComponent,
+    EventsComponent,
+
+
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -104,7 +112,7 @@ export const firebaseConfig ={
     HttpClientModule,
     DataTablesModule,
     FormsModule,
-   
+
     CdkTableModule,
     CdkTreeModule,
     MatAutocompleteModule,
@@ -142,26 +150,35 @@ export const firebaseConfig ={
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-   
+
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       {path:'new',component:NewEventComponent,canActivate:[AuthGuardService]},
       {path:'edit/:id',component:EditEventComponent,canActivate:[AuthGuardService]},
-      {path:'data',component:DatatableComponent,canActivate:[RoleGuardService],data:{ 
+      {path:'data',component:DatatableComponent,canActivate:[RoleGuardService],data:{
         expectedRole: 'Admin'
       } },
       {path:'event',component:EventComponent},
+      { path: 'events', component: MainComponent,
+      children: [
+        {
+          path: ':event-name',
+          component: EventDetailsComponent
+        }
+      ]
+    },
+
       {path:'dash',component:DashboardComponent,canActivate:[AuthGuardService]},
       {path:'org',component:OrgansisersComponent,canActivate:[RoleGuardService],data:{
         expectedRole:'Organiser'
       }
 }
-     
+
     ])
   ],
-  providers: [DataService,AuthService],
+  providers: [DataService,AuthService,ToolbarService,ScriptService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -49,6 +49,18 @@ namespace Dhanak.Controllers
             return Ok(users);
 
         }
+        [HttpGet("{userid}/{eventid}")]
+        public async Task<IActionResult> CheckRegistered(int userid,int eventid)
+        {
+            var ev = context.Registration.Where(m => m.EventID==eventid);
+            var check =await ev.SingleOrDefaultAsync(m => m.UserId==userid);
+            if(check ==null)
+            {
+                return Ok(false);
+            }
+          return Ok(true);
+
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEvents(int id)
