@@ -11,13 +11,13 @@
             <form novalidate #f="ngForm" (submit)="onSubmit(f)">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" [value]="event.eventName" class="form-control" [(ngModel)]="events.eventName" name="name" required minlength="2" #name="ngModel">
-                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <input type="text" [value]="event.eventName" class="form-control" [(ngModel)]="events.eventName" name="name" required minlength="2" #name1="ngModel">
+                    <div *ngIf="name1.invalid && (name1.dirty || name1.touched)" class="alert alert-danger">
 
-                        <div *ngIf="name.errors.required">
+                        <div *ngIf="name1.errors.required">
                             Event name is required.
                         </div>
-                        <div *ngIf="name.errors.minlength">
+                        <div *ngIf="name1.errors.minlength">
                             Event name must be at least 2 characters long.
                         </div>
 
@@ -28,12 +28,12 @@
                 <div class="form-group">
                     <label>Category</label>
                     <select class="form-control"  [(ngModel)]="event.categoryId" name="category" #cat="ngModel" required>
-                      
+
                       <option  style='width: 90%;' *ngFor="let c of category" [selected]="categoryid == c.id"  value="{{c.id}}">{{c.name}}</option>
-                       
+
                       </select>
                     <div *ngIf="cat.invalid && (cat.dirty || cat.touched)" class="alert alert-danger">
-                        <div *ngIf="cat.errors.required"> 
+                        <div *ngIf="cat.errors.required">
                             Category is required.
                         </div>
                     </div>
@@ -71,6 +71,18 @@
                     <input type="text" id="textarea" class="form-control" [value]="event.description" [(ngModel)]="events.description" name="description">
 
                 </div>
+                <div class="form-group" *ngFor="let rule of event.rules;let i  = index">
+
+                    <label for="name">Rules {{i+1}}</label>
+                    <input type="text" [name]="rule.rules" size="100" id="description" class="form-control" [(ngModel)]="rule.rules" name="rule.rules">
+                    <br/>
+                    <button class="btn btn-default" (click)="delete(i)">Delete Rule</button>
+                    <br/>
+
+                  </div>
+                  <button class="btn btn-default" type="button" (click)="add()">Add rule</button>
+                  <br/>
+                  <br/>
                 <input type="submit" class="btn btn-primary">
             </form>
         </div>

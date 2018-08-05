@@ -1,0 +1,46 @@
+.bg{ 
+    background: url('/assets/images/bg.jpg') no-repeat center center fixed !important; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  mat-expansion-panel ::ng-deep .mat-expansion-panel-body{
+    padding: 0px !important;
+  }
+  mat-expansion-panel{
+    background: transparent;
+    border: 2px solid white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    color: white;
+  }
+  .mat-expansion-panel:nth-child(1):hover{
+    background: #9C27B0;
+  }
+  .mat-expansion-panel:nth-child(2):hover{
+    background: #009688;
+  }
+  .mat-expansion-panel:nth-child(3):hover{
+    background: #ff1744;
+  }
+  .mat-expansion-panel:nth-child(4):hover{
+    background: #304FFE;
+  }
+  .mat-nav-list{
+    padding: 0px;
+  }
+  .mat-list-item:hover{
+    background: rgba(0,0,0,.08);
+  }
+.mat-nav-list a{
+    padding: 0 24px 16px;
+    color: white;
+  }
+  ::ng-deep .mat-expansion-indicator:after{
+    color: white !important;
+  }
+  ::ng-deep mat-toolbar{
+    background: #304FFE;
+  }
+  

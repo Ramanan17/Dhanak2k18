@@ -1,0 +1,24 @@
+<ng-container *ngIf="event; else second">
+
+<mat-tab-group color="primary">
+    <mat-tab  label="Overview" > {{dbevent.description}}</mat-tab>
+    <mat-tab  label="Rules" *ngFor="let r of dbevent.rules"> {{r.rules}} </mat-tab>
+    <mat-tab  label="Contact">Organiser:
+       {{dbevent.organiser.name}}<br/>
+      Phone:{{dbevent.organiser.phone}}<br/>
+      Email:{{dbevent.organiser.email}} </mat-tab>
+</mat-tab-group>
+
+</ng-container>
+<ng-template #second>
+<mat-tab-group color="primary" >
+    <mat-tab label="Overview">The information for this event is not available yet. Stay tuned.</mat-tab>
+    <mat-tab label="Rules"> The information for this event is not available yet. Stay tuned.</mat-tab>
+    <mat-tab label="Contact"> The information for this event is not available yet. Stay tuned.</mat-tab>
+</mat-tab-group>
+<div *ngIf="hasPhoneNumber">
+
+
+</div>
+
+</ng-template>

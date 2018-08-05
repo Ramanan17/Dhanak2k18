@@ -26,8 +26,8 @@
                     <label>Category</label>
                     <select class="form-control" id="Category" [(ngModel)]="events.categoryId" name="category" #cat="ngModel" required>
         <option *ngFor="let c of category" value="{{c.id}}">{{c.name}}</option>
-        
-       
+
+
     </select>
                     <div *ngIf="cat.invalid && (cat.dirty || cat.touched)" class="alert alert-danger">
                         <div *ngIf="cat.errors.required">
@@ -67,6 +67,20 @@
                     <label for="name">Description</label>
                     <input type="text" size="100" id="description" class="form-control" [(ngModel)]="events.description" name="description">
                 </div>
+                <div class="form-group" *ngFor="let rule of events.rules;let i  = index">
+
+                  <label for="name">Rules {{i+1}}</label>
+                  <input type="text"  size="100" id="description" class="form-control" [(ngModel)]="rule.rules" name="{{rule.rules}}">
+                  <br/>
+                  <button class="btn btn-default" (click)="delete(i)">Delete Rule</button>
+                  <br/>
+
+                </div>
+                <button class="btn btn-default" type="menu" (click)="add()">Add rule</button>
+                <br/>
+                <br/>
+
+
                 <input type="submit" class="btn btn-primary">
             </form>
         </div>

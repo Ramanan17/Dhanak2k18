@@ -1,49 +1,45 @@
-
-<div class='main-nav'>
-    <div class='navbar navbar-inverse'>
-        <div class='navbar-header'>
-            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-                <span class='sr-only'>Toggle navigation</span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-            </button>
-            <a class='navbar-brand' [routerLink]='["/"]'>Dhanak</a>
-        </div>
-        <div class='clearfix'></div>
-        <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
-            <ul class='nav navbar-nav'>
-                    <li [routerLinkActive]='["link-active"]' >
-                        <a (click)='auth.login()' *ngIf="!auth.isAuthenticated()">
-                            <span class='glyphicon glyphicon-user'></span> Login
-                        </a>
-                        <a (click)='auth.logout()' *ngIf="auth.isAuthenticated()">
-                            <span class='glyphicon glyphicon-user'></span> Logout
-                        </a>
-                                 
-                </li>
-                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                    <a [routerLink]='["/"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-home'></span> Home </h4>
-                    </a>
-                </li>
-                <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/counter"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-education'></span> Counter
-                    </a>
-                </li>
-                <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
-                    </a>
-                </li>
-               
-                <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/data"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-pencil'></span>Events
-                    </a>
-                </li>
-            </ul>
-        </div>
+<mat-toolbar #btn color="primary">
+    <mat-toolbar-row style="display:flex;justify-content: space-between;">
+      <div>
+      <button  style="padding-right: 10px;width: unset;"
+      *ngIf="mobileQuery.matches" mat-icon-button
+      (click)="click2.toggle()"><mat-icon>menu</mat-icon></button>
+    <span><a style="text-decoration: none;color:white;padding-left: 15px; " [routerLink]="['/','home']">Dhanak</a></span>
     </div>
-</div>
+    <div style="display: flex;justify-content: space-between;" *ngIf="!mobileQuery.matches">
+    <span><a style="text-decoration: none;color:white;padding-left: 15px; " [routerLink]="['/']">Home</a></span>
+    <span><a style="text-decoration: none;color:white;padding-left: 15px; " [routerLink]="['/events']">Events</a></span>
+    <span><a style="text-decoration: none;color:white;padding-left: 15px; " [routerLink]="['/','home']">Contact Us</a></span>
+    <span><a (click)='auth.login()' *ngIf="!auth.isAuthenticated()">
+        <span class='glyphicon glyphicon-user'></span> Login
+    </a>
+    <a (click)='auth.logout()' *ngIf="auth.isAuthenticated()">
+        <span class='glyphicon glyphicon-user'></span> Logout
+    </a></span>
+    <span>
+        <a [routerLink]='["/data"]' (click)='collapse()' *ngIf="auth.isInRole('Admin')">
+          <span class='glyphicon glyphicon-pencil'></span>Event portal
+      </a>
+    </span>
+    <span>
+        <a [routerLink]='["/dash"]' (click)='collapse()' *ngIf="auth.isAuthenticated()">
+          <span class='glyphicon glyphicon-pencil'></span>DashBoard
+      </a>
+    </span>
+    <span>
+        <a [routerLink]='["/org"]' (click)='collapse()' *ngIf="auth.isInRole('Organiser')">
+          <span class='glyphicon glyphicon-pencil'></span>Organiser Portal
+      </a>
+    </span>
+
+  </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<router-outlet  (activate)="onActivate($event)"></router-outlet>
+
+
+
+
+

@@ -14,34 +14,48 @@ export class NewEventComponent implements OnInit {
 
   category:any[];
   validity:boolean=true;
-  
-  events:events = { eventName:'',description:'',categoryId:{id:0,name:''},coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
- 
-  event:event = { eventName:'',description:'',categoryId:0,coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
- 
+  rules :any[];
+  rule:any;
 
-  constructor(public dataservice:DataService,private router:Router ) 
+  events:events = { eventName:'',rules:[{rules:''}],description:'',categoryId:{id:0,name:''},coOrdinator:{name:'',phone:''},organiser:{name:'',phone:'',email:''}}
+
+
+
+  constructor(public dataservice:DataService,private router:Router )
   {
     this.dataservice.getCategory().subscribe(c => this.category=c)
-    
+    this.events.rules.push(this.rule={rules:""})
+
   }
 
     ngOnInit() {
-    
+
   }
-  
+  add()
+  {
+
+
+    this.events.rules.push(this.rule={rules:''});
+
+  }
+  delete(id)
+  {
+    this.events.rules.splice(id,1);
+  }
+
   onSubmit({value,valid})
   {
      if(valid)
      {
-    this.dataservice.addEvents(this.events).subscribe(); 
+    this.dataservice.addEvents(this.events).subscribe();
     this.router.navigate(['/data']);
-    
+console.log(this.events)
      }
     else{
-    
+
        this.validity=false;
     }
   }
+
 
 }

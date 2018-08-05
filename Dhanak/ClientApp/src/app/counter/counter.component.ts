@@ -1,4 +1,4 @@
-import { ClientService } from './../services/client.service';
+
 import { Component } from '@angular/core';
 import { Client } from '../services/Client';
 
@@ -9,9 +9,9 @@ import { Client } from '../services/Client';
 export class CounterComponent {
   public currentCount = 0;
   clients:Client[];
-  constructor(public clientService:ClientService)
+  constructor()
   {
-           this.clientService.getClients().subscribe(client => {this.clients=client,console.log(this.clients)})
+           
   }
   public incrementCounter() {
     this.currentCount++;

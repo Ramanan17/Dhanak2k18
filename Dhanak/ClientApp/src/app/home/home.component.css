@@ -1,0 +1,94 @@
+
+    /* @import url("/assets/fonts/komika-text/stylesheet.css") screen; 
+    @import url("/assets/fonts/komika-title/stylesheet.css") screen;  */
+     body{
+            background: url('/assets/images/b.jpg') no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            font-family: 'KomikaTextTightRegular', Arial, Helvetica, sans-serif;
+                font-size: 3em;
+        }
+        @font-face {
+  font-family: 'badaboom_bbregular';
+  src: url('/assets/fonts/funsized-webfont.woff2') format('woff2'),
+       url('/assets/fonts/funsized-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+#tagline{
+  font-size: 40px;
+  background: yellow;
+  background-size: 1200% 1200%;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+ 
+  
+}
+/* #tagline{
+      animation-name: rotate_scale;
+      animation-duration: 5s;
+      animation-timing-function:ease-in-out;
+  }
+  @keyframes rotate_scale{
+      0%{
+          transform: rotate(0deg) scale(0);
+      }
+      90%{
+        transform: rotate(1611deg) scale(1.5);
+      }
+      100%{
+          transform: rotate(1790deg) scale(1);
+      }
+  } */
+  .carousel .indicators .indicator-item.active {
+    background-color: #f44336 !important;
+}
+@media screen and (min-width: 850px) {
+    #standup{
+        background: url('/assets/images/rahul_crop.jpg') !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+    }
+    #font_resize{    
+        margin-right: 50px !important;
+        width: 40% !important;
+    }
+    #presents{
+        margin:0;
+    }
+}
+@media screen and (max-width: 800px) {
+    #pronite{
+        background: url(/assets/images/pronite2_mobile.jpg) !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+    }
+    #fashion_show{
+        background: url(/assets/images/fashion_show_mobile.jpg) !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+    }
+    #img_width{
+        width: 80% !important;
+    }
+    #event_superman{
+        flex-direction: column !important;
+    }
+    
+}
+@media screen and (min-width: 799px) {
+    #fashion_show>div{
+        width: 50%;
+        margin-left: 50px;
+        margin-top: 50px;
+    }
+    
+}
+#pronite_btn:hover{
+    background: white !important;
+    color:black !important;
+}

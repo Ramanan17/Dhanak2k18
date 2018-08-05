@@ -5,5 +5,6 @@ export interface event{
     organiser:organiser,
     coOrdinator:coOrdinator,
     description:string
+    rules:any[];
 
 }

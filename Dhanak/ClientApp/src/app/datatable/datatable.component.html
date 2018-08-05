@@ -3,7 +3,7 @@
  <br>
  <br>
  <br>
-<table id="example" class="table table-striped table-bordered" style="width:100%">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="example" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -17,6 +17,7 @@
             </th>
             <th>
                 Edit
+
             </th>
             <th>
                 Delete
@@ -37,11 +38,11 @@
             </td>
             <td>
                 <button class="btn btn-block" (click)="onClick(event.id)">Edit</button>
-                
+
 
             </td>
             <td>
-                <button class="btn btn-block" (click)="onDelete(event.id)">Delete</button>
+                <button class="btn btn-block" (click)="onDelete(event.id,event.eventName)">Delete</button>
             </td>
         </tr>
 

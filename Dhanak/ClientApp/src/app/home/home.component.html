@@ -1,15 +1,232 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
-<ul>
-  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-</ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
-<p>If you want to enable server-side prerendering, see the steps in <code>Startup.cs</code>.</p>
+<mat-sidenav-container class="sidenav-container darken bg"
+  style="height:calc(100% - 64px);width:100%;position:relative; top:-65px;">
+
+  <mat-sidenav
+  position="start"
+  #sidenav1
+  [mode]="over"
+  opened="false"
+  (closed)="toolbar()"
+  >
+
+  <mat-nav-list  *ngIf="mobileQuery.matches" style="width:180px;">
+      <a  mat-list-item >
+          Main Menu
+      </a>
+      <a  mat-list-item [routerLink]="['/','home']" >
+         Home
+      </a>
+      <a  mat-list-item [routerLink]="['/','events']" >
+         Events
+      </a>
+      <a  mat-list-item  >
+         Contact Us
+      </a>
+
+</mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+        <body class="hide_overflow demo-5">
+
+
+
+                <main>
+                        <div id="tagline_container" style="height: 100vh;
+                        width: 100vw;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        position: absolute;
+                        top: 0;">
+                            <div id="tagline" style="text-align: center;font-family: 'badaboom_bbregular';
+                            font-size: 70px;transform:rotate(-10deg);">
+                                #ComiColors
+                            </div>
+
+
+                        </div>
+                        <div style="height: 100vh;
+                        width: 100vw;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        position: absolute;
+                        top: 0;">
+                        <div style="
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-end;
+                        margin-bottom: 50px;">
+                        <a style="text-transform: capitalize;
+                        color: white;"
+                        class="waves-effect waves-light btn btn-flat deep-orange hamburger" id="explore">
+                        Explore!</a>
+                        </div>
+                        </div>
+
+
+
+
+                </main>
+                <main class="main main--demo-5">
+
+                <div class="content content--demo-5">
+                    <div class="global-menu" style="height: 100vh; width: 100vw;">
+                        <div class="global-menu__wrap" style="height: 100vh; width: 100vw;">
+                            <div class="global-menu__item " style="height: 100vh; width: 100vw;margin: 0;">
+                                <div class="carousel carousel-slider center" style="height: 100vh;">
+
+                                        <div id="standup" class="carousel-item black white-text" href="#one!"
+                                        style="background: url(/assets/images/rahul_mobile.jpg);
+                                                background-repeat: no-repeat;
+                                                background-size: cover;
+                                                color: black;">
+                                                <div style="display:flex;justify-content: flex-end;">
+                                                <div id="font_resize" style="margin-top: 150px;
+                                                display: flex;
+                                                flex-direction: column;
+                                                align-items: flex-end;
+                                                margin-right: 15px;width: 60%;">
+                                                    <div style="font-family: 'Dosis', sans-serif;
+                font-size: inherit;
+                text-transform: uppercase;
+                font-weight: 900;
+                overflow: hidden;
+                display: inline-block;
+                color: #424242;">Comedy Night</div>
+                <p id="presents" style="font-family: 'Lobster', cursive;display: inline-block;color:black;font-size:1em;">Presents</p>
+                                                    <div style="font-family: 'Raleway', Arial, sans-serif;
+                font-size: inherit;
+                text-transform: uppercase;
+                font-weight: 900;
+                overflow: hidden;
+                display: inline-block;
+                color: #424242;line-height:0.9;">Rahul </div>
+                                                    <div style="font-family: 'Raleway', Arial, sans-serif;
+                font-size: inherit;
+                text-transform: uppercase;
+                font-weight: 900;
+                overflow: hidden;
+                display: inline-block;
+                color: #424242;line-height:1;">Subramaniyam</div>
+                <!-- <p style="color: black;font-family: 'Roboto';width: 350px;
+                text-align: right;
+                font-size: 0.7em;
+                color: gray;
+                font-family: 'Roboto';">Dont miss out on a chance to meet the funniest South Indian standup comedian!</p>                          -->
+            <button class="btn red" style="margin-top:50px;">Book Now</button>
+
+                                                </div></div>
+                                        </div>
+                                        <div id="pronite" class="carousel-item amber white-text" href="#two!"
+                                        style="background: url(/assets/images/pronite2.jpg);
+                                                background-repeat: no-repeat;
+                                                background-size: cover;
+                                                color: black;"
+                                        >
+                                            <!-- <img id="pronite_image" src="pronite2.jpg" alt="" style="position: absolute;
+                                            top: 0;
+                                            left: 0;
+                                            height: 100%;
+                                            width: auto;"> -->
+                                            <div style="    margin-top: 100px;
+                                            font-family: 'Dosis', sans-serif;
+                                            font-weight: 300;
+                                            font-size: 2em;">PRONITE</div>
+                                            <div style="font-family: 'Dosis', sans-serif;
+                                            font-weight: 300;
+                                            font-size: 1.5em;
+                                            letter-spacing: 5px;">Live. Breathe. Believe</div>
+                                            <button id="pronite_btn" style="    border: 3px solid #fff;
+                                            color: #fff;
+                                            background: none;
+                                            font-size:1em;
+                                            cursor: pointer;
+                                            padding: 25px 50px;
+                                            display: inline-block;
+                                            margin: 50px 30px;
+                                            text-transform: uppercase;
+                                            letter-spacing: 1px;
+                                            font-weight: 300;
+                                            outline: none;
+                                            position: relative;">Book Now</button>
+                                        </div>
+                                        <div id="fashion_show" class="carousel-item green white-text" href="#three!"
+                                        style="background: url(/assets/images/fashion_show2.jpg);
+                                                background-repeat: no-repeat;
+                                                background-size: cover;
+                                                color: black;">
+                 <div style="display:flex;flex-direction: column;">
+                <div style="font-family: 'Lobster', cursive;display: inline-block;color:burlywood;
+                font-size: 2em;
+               margin-top: 100px;">Fashion Show</div>
+               <button id="pronite_btn" style="    border: 3px solid burlywood;
+                                            color: burlywood;
+                                            background: none;
+                                            font-size:0.7em;
+                                            cursor: pointer;
+                                            padding: 20px 40px;
+                                            display: inline-block;
+                                            margin: 50px 30px;
+                                            text-transform: uppercase;
+                                            letter-spacing: 1px;
+                                            font-weight: 300;
+                                            outline: none;
+                                            position: relative;margin-top:10px;">Register Now</button>
+                                        </div>
+                </div>
+                                        <div class="carousel-item blue white-text" href="#four!">
+                                            <div id="event_superman" style="display: flex;flex-direction: row;margin-top: 50px;    align-items: center;">
+                                               <div id="img_width" style="width: 50%;"> <img style="transform: rotate(-30deg);"  src="/assets/images/superman.svg" ></div>
+                                                <div style="
+                                                display: flex;
+                                                flex-direction: column;
+                                                align-items: flex-end;
+                                                margin-right: 15px;">
+                                                    <div style="font-family: 'Dosis', sans-serif;
+                font-size: inherit;
+                text-transform: uppercase;
+                font-weight: 900;
+                overflow: hidden;
+                display: inline-block;
+                color: #424242;">And many more...</div>
+                                                    <div style="font-family: 'Raleway', Arial, sans-serif;
+                font-size: inherit;
+                text-transform: uppercase;
+                font-weight: 900;
+                overflow: hidden;
+                display: inline-block;
+                color: #424242;line-height:0.9;">Check out all our  </div>
+                                                    <div style="font-family: 'Raleway', Arial, sans-serif;
+                font-size: inherit;
+                text-transform: uppercase;
+                font-weight: 900;
+                overflow: hidden;
+                display: inline-block;
+                color: #424242;line-height:1;">Events</div>
+                <!-- <p style="color: black;font-family: 'Roboto';width: 350px;
+                text-align: right;
+                font-size: 0.7em;
+                color: gray;
+                font-family: 'Roboto';">Dont miss out on a chance to meet the funniest South Indian standup comedian!</p>                          -->
+            <button class="btn red" style="margin-top:50px;">Explore Now</button>
+            </div>
+                                                </div></div>
+
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            <svg class="shape-overlays" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <path class="shape-overlays__path"></path>
+                                <path class="shape-overlays__path"></path>
+                            </svg>
+
+                    </main>
+                </body>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

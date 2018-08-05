@@ -27,7 +27,7 @@ namespace Dhanak.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        [Authorize]
+       
         public async Task<IActionResult> Get()
         {
             var results = new List<EventResource>();
@@ -77,20 +77,29 @@ namespace Dhanak.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-          var e= await context.Events.Include(m=>m.Category).SingleOrDefaultAsync(m =>m.Id==id);
+          var e= await context.Events.Include(m=>m.Category).Include(m => m.Rules).SingleOrDefaultAsync(m =>m.Id==id);
             if (e == null)
             {
                 return NotFound();
             }
+            var rule1 = new Rules()
+            {
+                rules = ""
+            };
             var result = new EventResource()
             {
                 CategoryId = 0,
                 Organiser = new OrganiserResource() { Email = "email" },
-                CoOrdinator = new CoOrdinatorResource() { Name = "name" }
+                CoOrdinator = new CoOrdinatorResource() { Name = "name" },
+                rules = new List<Rules>()
+                {rule1
 
+                }
+                
 
 
             };
+            
             result.EventId = e.Id;
             result.EventName = e.EventName;
             result.CategoryId = e.Category.Id;
@@ -100,7 +109,7 @@ namespace Dhanak.Controllers
             result.CoOrdinator.Name = e.CoOrdinatorName;
             result.CoOrdinator.Phone = e.OrganizerPhone;
             result.Description = e.Description;
-
+            result.rules = e.Rules;
             return Ok(result);
         }
 
@@ -124,7 +133,9 @@ namespace Dhanak.Controllers
                 OrganizerPhone = resource.Organiser.Phone,
                 CoOrdinatorName = resource.CoOrdinator.Name,
                 CoOrdinatorPhone = resource.CoOrdinator.Phone,
-                Description = resource.Description
+                Description = resource.Description,
+                Rules = resource.rules
+                
 
 
 
@@ -145,8 +156,12 @@ namespace Dhanak.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var e = await context.Events.Include(m => m.Category).SingleOrDefaultAsync(m => m.Id == id);
+
+          
+            var e = await context.Events.Include(m => m.Category).Include(m => m.Rules).SingleOrDefaultAsync(m => m.Id == id);
             var c = await context.Category.SingleOrDefaultAsync(m => m.Id == resource.CategoryId);
+            var added = new List<Rules>();
+            var remove = new List<Rules>();
             e.EventName = resource.EventName;
             e.Category = c;
             e.OrganizerName = resource.Organiser.Name;
@@ -156,6 +171,36 @@ namespace Dhanak.Controllers
             e.CoOrdinatorPhone = resource.CoOrdinator.Phone;
             e.Description = resource.Description;
 
+            foreach (var rule in resource.rules)
+            {
+                if (e.Rules.Any(u => u.Id == rule.Id))
+                {
+                    var rul = e.Rules.SingleOrDefault(u => u.Id == rule.Id);
+                    if (rul != null)
+                    {
+                        rul.rules = rule.rules;
+                    }
+                }
+                else
+                {
+                      
+                    e.Rules.Add(rule);
+                }
+
+                
+               
+            }
+
+          
+           
+
+           
+            
+
+          
+
+            
+           
             await context.SaveChangesAsync();
 
             return Ok(e);
@@ -163,13 +208,32 @@ namespace Dhanak.Controllers
 
         }
 
+        [HttpDelete("Rules/{id}")]
+        public async Task<IActionResult> DeleteRule(int id)
+        {
+            var rule = await context.Rules.SingleOrDefaultAsync(m => m.Id == id);
+            if (rule != null)
+            {
+                context.Remove(rule);
+            }
+
+           await context.SaveChangesAsync();
+            return Ok(rule);
+        }
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> Delete(int id)
         {
             var e = await context.Events.Include(m => m.Category).SingleOrDefaultAsync(m => m.Id == id);
-            context.Remove(e);
+            var registerd =  context.Registration.Where(m => m.EventID == id);
+            context.Events.Remove(e);
+            foreach (var ef in registerd)
+            {
+                context.Registration.Remove(ef);
+
+            }
+           
             await context.SaveChangesAsync();
             return Ok(id);
 
